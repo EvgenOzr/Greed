@@ -74,20 +74,25 @@ const Dice = ({variant, rotate} : Props) => {
 
 const DiceView = ({dices, startGame} : ArrayProps) => {
 
-    const [rotate, setRotate] = useState(0)
-    const [newDices, setNewDices] = useState([1, 1, 1, 1, 1])
+    const [rotate, setRotate] = useState(0);
+    const [newDices, setNewDices] = useState([1, 1, 1, 1, 1]);
 
     useEffect (() => {
         if(startGame){
             const rotation = setInterval(() => {
                     setRotate((r) => r + 0.21)
                 }, 200)
-            setTimeout(() => {
+            const endRotation = setTimeout(() => {
                 setRotate(0)
                 clearInterval(rotation)
                 setNewDices(dices);
             }, 2700)
+            return () => {
+                clearInterval(rotation);
+                clearTimeout(endRotation);
+            }
         }
+
     }, [dices, startGame])
 
     useEffect (() => {

@@ -29,7 +29,8 @@ function App(): JSX.Element {
 
 	useEffect(() => {
 		if(startGame.current) {
-			setTimeout(() => {setScore(Greed(dices))}, 3000)
+			const greed = setTimeout(() => {setScore(Greed(dices))}, 3000)
+			return () => clearTimeout(greed);
 		}
 	}, [dices])
 
