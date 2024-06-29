@@ -2,37 +2,36 @@ import React, {useState, useEffect} from "react";
 import './Dice.css'
 
 interface Props {
-    variant: number
+    variant: number,
+    rotate: number
 }
 
 interface ArrayProps {
-    dices: number[]
+    dices: number[],
+    startGame: boolean
 }
 
-const Dice = ({variant} : Props) => {
+const Dice = ({variant, rotate} : Props) => {
 
     return (
         <>
-        {(variant === 0) &&
-            <div className="first-face">
-            </div>}
          {(variant === 1) &&
-            <div className="first-face">
+            <div style={{transform: `rotate(${rotate}turn`}} className="first-face">
                 <span className="pip"></span>
             </div>}
         {(variant === 2) &&
-            <div className="second-face">
+            <div style={{transform: `rotate(${rotate}turn`}} className="second-face">
                 <span className="pip"></span>
                 <span className="pip"></span>
             </div>}
         {(variant === 3) &&
-        <div className="third-face">
+        <div style={{transform: `rotate(${rotate}turn`}} className="third-face">
             <span className="pip"></span>
             <span className="pip"></span>
             <span className="pip"></span>
         </div>}
         {(variant === 4) &&
-        <div className="fourth-face">
+        <div style={{transform: `rotate(${rotate}turn`}} className="fourth-face">
             <div className="column">
                 <span className="pip"></span>
                 <span className="pip"></span>
@@ -43,7 +42,7 @@ const Dice = ({variant} : Props) => {
             </div>
         </div>}
         {(variant === 5) &&
-        <div className="fifth-face">
+        <div style={{transform: `rotate(${rotate}turn`}} className="fifth-face">
             <div className="column">
                 <span className="pip"></span>
                 <span className="pip"></span>
@@ -57,7 +56,7 @@ const Dice = ({variant} : Props) => {
             </div>
         </div>}
         {(variant === 6) &&
-        <div className="sixth-face">
+        <div style={{transform: `rotate(${rotate}turn`}} className="sixth-face">
             <div className="column">
                 <span className="pip"></span>
                 <span className="pip"></span>
@@ -73,18 +72,37 @@ const Dice = ({variant} : Props) => {
     )
 }
 
-const DiceView = ({dices} : ArrayProps) => {
+const DiceView = ({dices, startGame} : ArrayProps) => {
 
+    const [rotate, setRotate] = useState(0)
+    const [newDices, setNewDices] = useState([1, 1, 1, 1, 1])
+
+    useEffect (() => {
+        if(startGame){
+            const rotation = setInterval(() => {
+                    setRotate((r) => r + 0.21)
+                }, 200)
+            setTimeout(() => {
+                setRotate(0)
+                clearInterval(rotation)
+                setNewDices(dices);
+            }, 2700)
+        }
+    }, [dices, startGame])
+
+    useEffect (() => {
+        setNewDices(dices);
+    }, [])
 
     const renderDiceView = (elem: number, idx: number) => {
         return (
-            <li key={idx}>{<Dice variant={elem}/>}</li>
+            <li key={idx}>{<Dice rotate={rotate} variant={elem}/>}</li>
         )
     }
-    
+
     return (
         <ul className="dicesView">
-            {dices.map(renderDiceView)}
+            {newDices.map(renderDiceView)}
         </ul>
     )
 

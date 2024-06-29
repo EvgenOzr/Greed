@@ -13,8 +13,10 @@
 
 }
 
-.colGame{
-
+.header{
+  padding-top: 10px;
+  font-size: 25px;
+  font-weight: 700;
 }
 
 /* .rowDice{
@@ -22,8 +24,8 @@
 } */
 
 .headerRow{
-  padding-top: 25px;
-  margin-bottom: 40px;
+  padding-top: 15px;
+  margin-bottom: 20px;
 }
 
 .colScore{

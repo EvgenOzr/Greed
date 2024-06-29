@@ -1,4 +1,10 @@
+
+  .zero-face {
+    /* transform: rotate(); */
+    /* transition: all 0.3s; */
+  }
 .first-face {
+   /* transform: rotate(0.5turn); */
     display: flex;
     justify-content: center;
     align-items: center;

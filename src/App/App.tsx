@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Col} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 import {Image} from 'react-bootstrap';
@@ -10,25 +10,32 @@ import Greed from '../Greed'
 
 function App(): JSX.Element {
 
-	const [dices, setDices] = useState([0, 0, 0, 0, 0])
+	const [dices, setDices] = useState([1, 1, 1, 1, 1])
 	const [score, setScore] = useState(0)
+	const startGame = useRef(false);
+	
 
 	const Game = () => {
 		let newDices = []
+
 		for(let i = 0; i < 5; i++) {
 			const newDice = 1 + Math.round(Math.random() * (6 - 1));
 			newDices.push(newDice)
 		}
+		startGame.current = true;
 		setDices(newDices);
 		// setVariant(1 + Math.round(Math.random() * (6 - 1)));
 	}
 
 	useEffect(() => {
-		setTimeout(() => {setScore(Greed(dices))}, 500)
+		if(startGame.current) {
+			setTimeout(() => {setScore(Greed(dices))}, 3000)
+		}
 	}, [dices])
 
 	return (
 		<div className="app">
+			<div className="header"> Greed game</div>
 			<Row className='headerRow'>
 				<Col className='colGame'>
 					<Button className='gameButton' variant="warning" onClick={Game}>Game!</Button>
@@ -38,7 +45,7 @@ function App(): JSX.Element {
 				</Col>
 			</Row>
 			<Row className='rowDice'>
-				<DiceView dices={dices}/>
+				<DiceView dices={dices} startGame = {startGame.current}/>
 			</Row>
 			<div className='labelScore'>
 				<div>{`Three 1's => 1000 points`}</div>
