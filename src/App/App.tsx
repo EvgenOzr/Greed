@@ -10,12 +10,12 @@ import Greed from '../Greed'
 
 function App(): JSX.Element {
 
-	const [dices, setDices] = useState([0, 0, 0, 0, 0, 0])
+	const [dices, setDices] = useState([0, 0, 0, 0, 0])
 	const [score, setScore] = useState(0)
 
 	const Game = () => {
 		let newDices = []
-		for(let i = 0; i < 6; i++) {
+		for(let i = 0; i < 5; i++) {
 			const newDice = 1 + Math.round(Math.random() * (6 - 1));
 			newDices.push(newDice)
 		}
@@ -24,23 +24,32 @@ function App(): JSX.Element {
 	}
 
 	useEffect(() => {
-		// setScore(0)
 		setTimeout(() => {setScore(Greed(dices))}, 500)
 	}, [dices])
 
 	return (
 		<div className="app">
-			<Row>
-				<Col>
+			<Row className='headerRow'>
+				<Col className='colGame'>
 					<Button className='gameButton' variant="warning" onClick={Game}>Game!</Button>
 				</Col>
-				<Col>
-					<div>Score:{score}</div>
+				<Col className='colScore'>
+					<div>Score: {score}</div>
 				</Col>
 			</Row>
-			<Row>
+			<Row className='rowDice'>
 				<DiceView dices={dices}/>
 			</Row>
+			<div className='labelScore'>
+				<div>{`Three 1's => 1000 points`}</div>
+				<div>{`Three 6's => 600 points`}</div>
+				<div>{`Three 5's =>  500 points`}</div>
+				<div>{`Three 4's =>  400 points`}</div>
+				<div>{`Three 3's =>  300 points`}</div>
+				<div>{`Three 2's =>  200 points`}</div>
+				<div>{`One   1   =>  100 points`}</div>
+				<div>{`One   5   =>   50 point`}</div>
+			</div>
 		</div>
 	)
 	}
