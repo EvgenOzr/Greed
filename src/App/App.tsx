@@ -24,7 +24,6 @@ function App(): JSX.Element {
 		}
 		startGame.current = true;
 		setDices(newDices);
-		// setVariant(1 + Math.round(Math.random() * (6 - 1)));
 	}
 
 	useEffect(() => {

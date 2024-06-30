@@ -1,14 +1,14 @@
-const Greed = (dice) => {
+const Greed = (dice: number[]) : number => {
 
     let totalScore = 0;
     let repeat = 0
 
-    const otherNumbers = (elem) => {
+    const otherNumbers = (elem: number) => {
         if(elem === 1) totalScore += 100;
         if(elem === 5) totalScore += 50;
     }
 
-    const findRepeat = (item) => {
+    const findRepeat = (item: number) => {
         const result = dice.filter((elem) => elem === item)
         if (result.length >= 3) {
             return item;
